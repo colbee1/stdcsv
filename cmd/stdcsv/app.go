@@ -62,7 +62,7 @@ func (app *App) Setup() error {
 	app.Flag.fs.IntVar(&app.Flag.NbColumn, "columns", -1, "number of columns per rows")
 	app.Flag.fs.StringVar(&app.Flag.ColPad, "colpad", "", "column content when padding")
 	app.Flag.fs.StringVar(&app.Flag.Headers, "headers", "", "headers separated by comma")
-	app.Flag.fs.BoolVar(&app.Flag.TrimSpaces, "trim-sapces", false, "trim cells spaces")
+	app.Flag.fs.BoolVar(&app.Flag.TrimSpaces, "trim-spaces", false, "trim cells spaces")
 	app.Flag.fs.Int64Var(&app.Flag.Offset, "offset", 0, "number of rows to skip before start")
 	app.Flag.fs.Int64Var(&app.Flag.Limit, "limit", 0, "maximum number of rows in output")
 	app.Flag.fs.BoolVar(&app.Flag.ListCharset, "charset-list", false, "list recognized charset")
