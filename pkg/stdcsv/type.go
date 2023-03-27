@@ -8,13 +8,13 @@ type (
 		// Default is false
 		SkipBOM bool
 
-		// Comma defines the comma used by input file.
+		// CommaIn defines the comma used by input file.
 		// Default is ','.
-		Comma rune
+		CommaIn rune
 
-		// CommaOutput define comma to use in output file.
+		// CommaOut define comma to use in output file.
 		// Default is ','.
-		CommaOutput rune
+		CommaOut rune
 
 		// SkipTrailingComma skip trailing comma if present.
 		// Default is false

@@ -19,8 +19,8 @@ type App struct {
 		FileIn            string
 		FileOut           string
 		SkipBOM           bool
-		Comma             string
-		CommaOutput       string
+		CommaIn           string
+		CommaOut          string
 		SkipTrailingComma bool
 		Charset           string
 		Comment           string
@@ -53,8 +53,8 @@ func (app *App) Setup() error {
 	app.Flag.fs.StringVar(&app.Flag.FileIn, "in", "-", "input file")
 	app.Flag.fs.StringVar(&app.Flag.FileOut, "out", "-", "output file")
 	app.Flag.fs.BoolVar(&app.Flag.SkipBOM, "skip-bom", false, "skip the BOM")
-	app.Flag.fs.StringVar(&app.Flag.Comma, "comma-in", ",", "comma used in input")
-	app.Flag.fs.StringVar(&app.Flag.CommaOutput, "comma-out", ",", "comma to use for output")
+	app.Flag.fs.StringVar(&app.Flag.CommaIn, "comma-in", ",", "comma used in input")
+	app.Flag.fs.StringVar(&app.Flag.CommaOut, "comma-out", ",", "comma to use for output")
 	app.Flag.fs.BoolVar(&app.Flag.SkipTrailingComma, "skip-trailing-comma", false, "skip the trailing comma if present")
 	app.Flag.fs.StringVar(&app.Flag.Charset, "charset", "utf-8", "charset of input")
 	app.Flag.fs.StringVar(&app.Flag.Comment, "comment", "#", "char used as comment")
@@ -113,18 +113,27 @@ func (app *App) Run() error {
 
 	config := pkg.Config{
 		SkipBOM:           app.Flag.SkipBOM,
-		Comma:             []rune(app.Flag.Comma)[0],
-		CommaOutput:       []rune(app.Flag.CommaOutput)[0],
 		SkipTrailingComma: app.Flag.SkipTrailingComma,
 		Charset:           app.Flag.Charset,
-		Comment:           []rune(app.Flag.Comment)[0],
 		LazyQuotes:        app.Flag.LazyQuotes,
 		NbColumn:          app.Flag.NbColumn,
 		ColPad:            app.Flag.ColPad,
-		Headers:           strings.Split(app.Flag.Headers, ","),
 		TrimSpaces:        app.Flag.TrimSpaces,
 		Offset:            app.Flag.Offset,
 		Limit:             app.Flag.Limit,
+	}
+
+	if len(app.Flag.CommaIn) > 0 {
+		config.CommaIn = []rune(app.Flag.CommaIn)[0]
+	}
+	if len(app.Flag.CommaOut) > 0 {
+		config.CommaOut = []rune(app.Flag.CommaOut)[0]
+	}
+	if len(app.Flag.Comment) > 0 {
+		config.Comment = []rune(app.Flag.Comment)[0]
+	}
+	if len(app.Flag.Headers) > 0 {
+		config.Headers = strings.Split(app.Flag.Headers, ",")
 	}
 
 	stats, err := pkg.Transform(fin, fout, config)

@@ -46,15 +46,15 @@ func Transform(fin io.Reader, fout io.Writer, config Config) (*Stats, error) {
 	// Skip trailing comma ?
 	//
 	if config.SkipTrailingComma {
-		fin = filters.SkipTrailingComma(fin, config.Comma)
+		fin = filters.SkipTrailingComma(fin, config.CommaIn)
 	}
 
 	// Create CSV reader
 	//
 	lineNo := 0
 	csvReader := csv.NewReader(fin)
-	if config.Comma != 0 {
-		csvReader.Comma = config.Comma
+	if config.CommaIn != 0 {
+		csvReader.Comma = config.CommaIn
 	}
 	if config.Comment != 0 {
 		csvReader.Comment = config.Comment
@@ -87,8 +87,8 @@ func Transform(fin io.Reader, fout io.Writer, config Config) (*Stats, error) {
 	// Create CSV writer and write header line
 	//
 	csvWriter := csv.NewWriter(fout)
-	if config.CommaOutput != 0 {
-		csvWriter.Comma = config.CommaOutput
+	if config.CommaOut != 0 {
+		csvWriter.Comma = config.CommaOut
 	}
 	defer csvWriter.Flush()
 
